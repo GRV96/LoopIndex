@@ -1,2 +1,2 @@
 # LoopIndex
-The LoopIndex class encapsulates an index meant to iterate on a container. It facilitates its use wiht a while loop.
+The LoopIndex Python class encapsulates an index meant to iterate on a container. It facilitates its use in a while loop.
