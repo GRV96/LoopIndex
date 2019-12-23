@@ -39,6 +39,10 @@ def forward_iter_console_test(num_list, jump, start=0):
         print("Next index: " + str(index._index))
 
 
+def generate_range_list(length):
+    return [n for n in range(length)]
+
+
 def test_backward_iteration(num_list, jump, start=None):
     if start == None:
         start = len(num_list)-1
