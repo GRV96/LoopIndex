@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from loop_index import LoopIndex
+from os import system
 
 
 def backward_iter_console_test(num_list, jump, start=None):
@@ -142,12 +143,13 @@ assert(test_backward_iteration(list11, 5, 7) == [7])
 # Iterate by -6 from 4
 assert(test_backward_iteration(list11, 6, 4) == [])
 
-print("Testing with the following list: " + str(list11) + "\n")
-
-forward_iter_console_test(list11, 3, 2)
-print()
-forward_iter_console_test(list11, 2)
-print()
-backward_iter_console_test(list11, 2)
-print()
-backward_iter_console_test(list11, 4, 10)
+if __name__ == "__main__":
+    print("Testing with the following list: " + str(list11) + "\n")
+    forward_iter_console_test(list11, 3, 2)
+    print()
+    forward_iter_console_test(list11, 2)
+    print()
+    backward_iter_console_test(list11, 2)
+    print()
+    backward_iter_console_test(list11, 4, 10)
+    system("pause")

@@ -46,7 +46,24 @@ print(output)
 del index, output, visited_indices
 
 
-print("\nUse case 2.1: Print all odd numbers")
+print("\nUse case 1.3: Print all numbers backward")
+output = str()
+visited_indices = list()
+
+index = LoopIndex(0, -1, LIST_LENGTH-1)
+print(repr(index))
+while index.iterate():
+    i = index.get_value()
+    visited_indices.append(i)
+    output += str(num_list[i]) + " "
+
+print("Visited indices:", visited_indices)
+print(output)
+
+del index, output, visited_indices
+
+
+print("\nUse case 2.1: Print all odd numbers forward")
 output = str()
 visited_indices = list()
 
@@ -64,7 +81,25 @@ print(output)
 del index, output, visited_indices
 
 
-print("\nUse case 2.2: Print all even numbers")
+print("\nUse case 2.2: Print all odd numbers backward")
+output = str()
+visited_indices = list()
+
+index = LoopIndex(0, -2, LIST_LENGTH-1)
+print(repr(index))
+while index.iterate():
+    i = index.get_value()
+    visited_indices.append(i)
+    output += str(num_list[i]) + " "
+
+print("Visited indices:", visited_indices)
+# Warning! 1 is not printed.
+print(output)
+
+del index, output, visited_indices
+
+
+print("\nUse case 3.1: Print all even numbers")
 output = str()
 visited_indices = list()
 
@@ -81,7 +116,24 @@ print(output)
 del index, output, visited_indices
 
 
-print("\nUse case 3.1: Delete all odd numbers fowrard")
+print("\nUse case 3.2: Print all even numbers backward")
+output = str()
+visited_indices = list()
+
+index = LoopIndex(0, -2, LIST_LENGTH-2)
+print(repr(index))
+while index.iterate():
+    i = index.get_value()
+    visited_indices.append(i)
+    output += str(num_list[i]) + " "
+
+print("Visited indices:", visited_indices)
+print(output)
+
+del index, output, visited_indices
+
+
+print("\nUse case 4.1: Delete all odd numbers fowrard")
 list_copy = deepcopy(num_list)
 visited_indices = list()
 
@@ -105,7 +157,7 @@ print(list_copy)
 del index, list_copy, visited_indices
 
 
-print("\nUse case 3.2: Delete all odd numbers backward")
+print("\nUse case 4.2: Delete all odd numbers backward")
 list_copy = deepcopy(num_list)
 visited_indices = list()
 
@@ -123,7 +175,7 @@ print(list_copy)
 del index, list_copy, visited_indices
 
 
-print("\nUse case 4.1: Make groups of three elements forward")
+print("\nUse case 5.1: Make groups of three elements forward")
 groups = list()
 visited_indices = list()
 
@@ -148,7 +200,7 @@ for group in groups:
 del groups, index, visited_indices
 
 
-print("\nUse case 4.2: Make groups of three elements backward")
+print("\nUse case 5.2: Make groups of three elements backward")
 groups = list()
 visited_indices = list()
 
