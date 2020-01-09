@@ -2,12 +2,13 @@
 
 from copy import deepcopy
 from loop_index import LoopIndex
+from sys import stderr
 
-num_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-LIST_LENGTH = len(num_list)
 
-print("The use cases are based on this list:\n"
-      + str(num_list))
+NUM_LIST = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+LIST_LENGTH = len(NUM_LIST)
+
+print("The use cases are based on this list:\n" + str(NUM_LIST))
 
 
 print("\nUse case 1.1: Print all numbers")
@@ -16,13 +17,16 @@ visited_indices = list()
 
 index = LoopIndex(LIST_LENGTH)
 print(repr(index))
-while index.will_stay_within_bounds():
+while index.check_bounds():
     i = index.get_value()
     visited_indices.append(i)
-    output += str(num_list[i]) + " "
+    try:
+        output += str(NUM_LIST[i]) + " "
+    except IndexError:
+        print("INDEX ERROR! i = " + str(i), file=stderr)
     index.increment()
 
-print("Visited indices:", visited_indices)
+print("Visited indices: " + str(visited_indices))
 print(output)
 
 del index, output, visited_indices
@@ -38,15 +42,18 @@ print(repr(index))
 while index.iterate():
     i = index.get_value()
     visited_indices.append(i)
-    output += str(num_list[i]) + " "
+    try:
+        output += str(NUM_LIST[i]) + " "
+    except IndexError:
+        print("INDEX ERROR! i = " + str(i), file=stderr)
 
-print("Visited indices:", visited_indices)
+print("Visited indices: " + str(visited_indices))
 print(output)
 
 del index, output, visited_indices
 
 
-print("\nUse case 1.3: Print all numbers backward")
+print("\nUse case 1.3: Print all numbers in descending order")
 output = str()
 visited_indices = list()
 
@@ -55,15 +62,18 @@ print(repr(index))
 while index.iterate():
     i = index.get_value()
     visited_indices.append(i)
-    output += str(num_list[i]) + " "
+    try:
+        output += str(NUM_LIST[i]) + " "
+    except IndexError:
+        print("INDEX ERROR! i = " + str(i), file=stderr)
 
-print("Visited indices:", visited_indices)
+print("Visited indices: " + str(visited_indices))
 print(output)
 
 del index, output, visited_indices
 
 
-print("\nUse case 2.1: Print all odd numbers forward")
+print("\nUse case 2.1: Print all odd numbers in ascending order")
 output = str()
 visited_indices = list()
 
@@ -72,16 +82,18 @@ print(repr(index))
 while index.iterate():
     i = index.get_value()
     visited_indices.append(i)
-    output += str(num_list[i]) + " "
+    try:
+        output += str(NUM_LIST[i]) + " "
+    except IndexError:
+        print("INDEX ERROR! i = " + str(i), file=stderr)
 
-print("Visited indices:", visited_indices)
-# Warning! 11 is not printed.
+print("Visited indices: " + str(visited_indices))
 print(output)
 
 del index, output, visited_indices
 
 
-print("\nUse case 2.2: Print all odd numbers backward")
+print("\nUse case 2.2: Print all odd numbers in descending order")
 output = str()
 visited_indices = list()
 
@@ -90,16 +102,18 @@ print(repr(index))
 while index.iterate():
     i = index.get_value()
     visited_indices.append(i)
-    output += str(num_list[i]) + " "
+    try:
+        output += str(NUM_LIST[i]) + " "
+    except IndexError:
+        print("INDEX ERROR! i = " + str(i), file=stderr)
 
-print("Visited indices:", visited_indices)
-# Warning! 1 is not printed.
+print("Visited indices: " + str(visited_indices))
 print(output)
 
 del index, output, visited_indices
 
 
-print("\nUse case 3.1: Print all even numbers")
+print("\nUse case 3.1: Print all even numbers in ascending order")
 output = str()
 visited_indices = list()
 
@@ -108,15 +122,18 @@ print(repr(index))
 while index.iterate():
     i = index.get_value()
     visited_indices.append(i)
-    output += str(num_list[i]) + " "
+    try:
+        output += str(NUM_LIST[i]) + " "
+    except IndexError:
+        print("INDEX ERROR! i = " + str(i), file=stderr)
 
-print("Visited indices:", visited_indices)
+print("Visited indices: " + str(visited_indices))
 print(output)
 
 del index, output, visited_indices
 
 
-print("\nUse case 3.2: Print all even numbers backward")
+print("\nUse case 3.2: Print all even numbers in descending order")
 output = str()
 visited_indices = list()
 
@@ -125,40 +142,49 @@ print(repr(index))
 while index.iterate():
     i = index.get_value()
     visited_indices.append(i)
-    output += str(num_list[i]) + " "
+    try:
+        output += str(NUM_LIST[i]) + " "
+    except IndexError:
+        print("INDEX ERROR! i = " + str(i), file=stderr)
 
-print("Visited indices:", visited_indices)
+print("Visited indices: " + str(visited_indices))
 print(output)
 
 del index, output, visited_indices
 
 
-print("\nUse case 4.1: Delete all odd numbers fowrard")
-list_copy = deepcopy(num_list)
+print("\nUse case 4.1: Delete all odd numbers in ascending order")
+list_copy = deepcopy(NUM_LIST)
 visited_indices = list()
 
 index = LoopIndex(LIST_LENGTH)
 print(repr(index))
 # Method iterate cannot be used here.
-while index.will_stay_within_bounds():
+while index.check_bounds():
     i = index.get_value()
     visited_indices.append(i)
-    if list_copy[i] % 2: # Odd number
+    try:
+        number = list_copy[i]
+    except IndexError:
+        print("INDEX ERROR! i = " + str(i), file=stderr)
+        continue
+    if number % 2: # Odd number
         del list_copy[i]
+        # The limit must be updated when an element is deleted.
         index.set_limit(len(list_copy))
     else:
         # Incrementation is only required
         # if the number is not deleted.
         index.increment()
 
-print("Visited indices:", visited_indices)
+print("Visited indices: " + str(visited_indices))
 print(list_copy)
 
 del index, list_copy, visited_indices
 
 
-print("\nUse case 4.2: Delete all odd numbers backward")
-list_copy = deepcopy(num_list)
+print("\nUse case 4.2: Delete all odd numbers in descending order")
+list_copy = deepcopy(NUM_LIST)
 visited_indices = list()
 
 index = LoopIndex(0, -1, LIST_LENGTH-1)
@@ -166,33 +192,103 @@ print(repr(index))
 while index.iterate():
     i = index.get_value()
     visited_indices.append(i)
-    if list_copy[i] % 2: # Odd number
+    try:
+        number = list_copy[i]
+    except IndexError:
+        print("INDEX ERROR! i = " + str(i), file=stderr)
+        continue
+    if number % 2: # Odd number
         del list_copy[i]
 
-print("Visited indices:", visited_indices)
+print("Visited indices: " + str(visited_indices))
 print(list_copy)
 
 del index, list_copy, visited_indices
 
 
-print("\nUse case 5.1: Make groups of three elements forward")
+print("\nUse case 5.1: Delete all even numbers in ascending order")
+list_copy = deepcopy(NUM_LIST)
+visited_indices = list()
+
+index = LoopIndex(LIST_LENGTH)
+print(repr(index))
+# Method iterate cannot be used here.
+while index.check_bounds():
+    i = index.get_value()
+    visited_indices.append(i)
+    try:
+        number = list_copy[i]
+    except IndexError:
+        print("INDEX ERROR! i = " + str(i), file=stderr)
+        continue
+    if number%2 == 0: # Even number
+        del list_copy[i]
+        # The limit must be updated when an element is deleted.
+        index.set_limit(len(list_copy))
+    else:
+        # Incrementation is only required
+        # if the number is not deleted.
+        index.increment()
+
+print("Visited indices: " + str(visited_indices))
+print(list_copy)
+
+del index, list_copy, visited_indices
+
+
+print("\nUse case 5.2: Delete all even numbers in descending order")
+list_copy = deepcopy(NUM_LIST)
+visited_indices = list()
+
+index = LoopIndex(0, -1, LIST_LENGTH-1)
+print(repr(index))
+while index.iterate():
+    i = index.get_value()
+    visited_indices.append(i)
+    try:
+        number = list_copy[i]
+    except IndexError:
+        print("INDEX ERROR! i = " + str(i), file=stderr)
+        continue
+    if number%2 == 0: # Even number
+        del list_copy[i]
+
+print("Visited indices: " + str(visited_indices))
+print(list_copy)
+
+del index, list_copy, visited_indices
+
+
+# When performing a task on groups of consecutive elements,
+# it can be necessary to skip the last iteration.
+print("\nUse case 6.1: Make groups of three elements in ascending order")
 groups = list()
 visited_indices = list()
 
-index = LoopIndex(LIST_LENGTH, 3)
+if LIST_LENGTH % 3: # Length is not a multiple of 3.
+    skip_last_iter = True
+    print("The last iteration will be skipped.")
+else:
+    skip_last_iter = False
+
+index = LoopIndex(LIST_LENGTH, 3, skip_last=skip_last_iter)
 print(repr(index))
 while index.iterate():
     i = index.get_value()
     visited_indices.append(i)
     group = list()
     jndex = LoopIndex(i+3, start=i)
+    print("\t" + repr(jndex))
     while jndex.iterate():
         j = jndex.get_value()
-        group.append(num_list[j])
+        try:
+            group.append(NUM_LIST[j])
+        except IndexError:
+            print("INDEX ERROR! j = " + str(j), file=stderr)
     groups.append(group)
 
 # Index 9 is not visited.
-print("Visited indices:", visited_indices)
+print("Visited indices: " + str(visited_indices))
 
 for group in groups:
     print(group)
@@ -200,24 +296,34 @@ for group in groups:
 del groups, index, visited_indices
 
 
-print("\nUse case 5.2: Make groups of three elements backward")
+print("\nUse case 6.2: Make groups of three elements in descending order")
 groups = list()
 visited_indices = list()
 
-index = LoopIndex(0, -3, LIST_LENGTH-1)
+if LIST_LENGTH % 3: # Length is not a multiple of 3.
+    skip_last_iter = True
+    print("The last iteration will be skipped.")
+else:
+    skip_last_iter = False
+
+index = LoopIndex(0, -3, LIST_LENGTH-1, skip_last_iter)
 print(repr(index))
 while index.iterate():
     i = index.get_value()
     visited_indices.append(i)
     group = list()
     jndex = LoopIndex(i-2, -1, i)
+    print("\t" + repr(jndex))
     while jndex.iterate():
         j = jndex.get_value()
-        group.append(num_list[j])
+        try:
+            group.append(NUM_LIST[j])
+        except IndexError:
+            print("INDEX ERROR! j = " + str(j), file=stderr)
     groups.append(group)
 
 # Index 1 is not visited.
-print("Visited indices:", visited_indices)
+print("Visited indices: " + str(visited_indices))
 
 for group in groups:
     print(group)

@@ -2,31 +2,24 @@
 
 class LoopIndex:
 
-    def __init__(self, limit, jump=1, start=0):
+    def __init__(self, limit, jump=1, start=0, skip_last=False):
         if jump == 0:
-            raise ValueError('Incrementing by 0 does not make sense.')
+            raise ValueError("Incrementing by 0 does not make sense.")
 
-        self.set_limit(limit)
         self._jump = jump
         self._start = start
-        
-        if not self._limit_is_reachable():
-            raise ValueError('The limit will never be reached. limit = '
-                             + str(limit) + ', jump = ' + str(jump)
-                             + ', start = ' + str(start))
+        self.set_limit(limit)
 
         self.reset()
-
-        if self._jump > 0:
-            self._lambda_within_bounds = lambda:\
-                self._index + self._jump - 1 < self._limit
-        else:
-            self._lambda_within_bounds = lambda:\
-                self._index + self._jump + 1 >= self._limit
+        self.skip_last_iter(skip_last)
 
     def __repr__(self):
-        return 'LoopIndex(' + str(self._limit) + ', '\
-                + str(self._jump) + ', ' + str(self._start) + ')'
+        return "LoopIndex(" + str(self._limit) + ", "\
+                + str(self._jump) + ", " + str(self._start) + ", "\
+                + str(self._skip_last_iter) + ")"
+
+    def check_bounds(self):
+        return self._lambda_check_bounds()
 
     def get_value(self):
         return self._index
@@ -39,7 +32,7 @@ class LoopIndex:
             self._first_iteration = False
         else:
             self.increment()
-        return self.will_stay_within_bounds()
+        return self.check_bounds()
 
     def _limit_is_reachable(self):
         return (self._limit - self._start) * self._jump > 0
@@ -48,8 +41,27 @@ class LoopIndex:
         self._first_iteration = True
         self._index = self._start
 
+    def _set_lambda_check_bounds(self):
+        if self._skip_last_iter:
+            if self._jump > 0:
+                self._lambda_check_bounds = lambda:\
+                    self._index + self._jump - 1 < self._limit
+            else:
+                self._lambda_check_bounds = lambda:\
+                    self._index + self._jump + 1 >= self._limit
+        else:
+            if self._jump > 0:
+                self._lambda_check_bounds = lambda: self._index < self._limit
+            else:
+                self._lambda_check_bounds = lambda: self._index >= self._limit
+
     def set_limit(self, limit):
         self._limit = limit
+        if not self._limit_is_reachable():
+            raise ValueError("The limit will never be reached. limit = "
+                             + str(limit) + ", jump = " + str(jump)
+                             + ", start = " + str(start))
 
-    def will_stay_within_bounds(self):
-        return self._lambda_within_bounds()
+    def skip_last_iter(self, skip_last=True):
+        self._skip_last_iter = skip_last
+        self._set_lambda_check_bounds()
