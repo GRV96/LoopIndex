@@ -293,7 +293,7 @@ print("Visited indices: " + str(visited_indices))
 for group in groups:
     print(group)
 
-del groups, index, visited_indices
+del groups, index, skip_last_iter, visited_indices
 
 
 print("\nUse case 6.2: Make groups of three elements in descending order")
@@ -328,4 +328,4 @@ print("Visited indices: " + str(visited_indices))
 for group in groups:
     print(group)
 
-del groups, index, visited_indices
+del groups, index, skip_last_iter, visited_indices
