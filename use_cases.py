@@ -73,6 +73,26 @@ print(output)
 del index, i, output, visited_indices
 
 
+print("\nUse case 1.4: Print all numbers in descending order with negative indices")
+output = str()
+visited_indices = list()
+
+index = LoopIndex(-LIST_LENGTH, -1, -1)
+print(repr(index))
+while index.iterate():
+    i = index.get_value()
+    visited_indices.append(i)
+    try:
+        output += str(NUM_LIST[i]) + " "
+    except IndexError:
+        print("INDEX ERROR! i = " + str(i), file=stderr)
+
+print("Visited indices: " + str(visited_indices))
+print(output)
+
+del index, i, output, visited_indices
+
+
 print("\nUse case 2.1: Print all odd numbers in ascending order")
 output = str()
 visited_indices = list()
