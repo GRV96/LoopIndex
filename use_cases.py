@@ -354,6 +354,7 @@ for group in groups:
 del GROUP_SIZE, groups, group, index, i,\
     jndex, j, skip_last_iter, visited_indices
 
+
 print("\nUse case 7.1: Make groups of three elements from a list\n"
       + "              of nine elements in ascending order")
 NUM_LIST_7_1 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
