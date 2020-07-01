@@ -34,8 +34,8 @@ class LoopIndex:
             self.increment()
         return self.check_bounds()
 
-    def _limit_is_reachable(self):
-        return (self._limit - self._start) * self._jump > 0
+    def _limit_is_reachable(self, limit):
+        return (limit - self._start) * self._jump > 0
 
     def reset(self):
         self._first_iteration = True
@@ -56,11 +56,11 @@ class LoopIndex:
                 self._lambda_check_bounds = lambda: self._index >= self._limit
 
     def set_limit(self, limit):
-        self._limit = limit
-        if not self._limit_is_reachable():
+        if not self._limit_is_reachable(limit):
             raise ValueError("The limit will never be reached. limit = "
                              + str(limit) + ", jump = " + str(jump)
                              + ", start = " + str(start))
+        self._limit = limit
 
     def skip_last_iter(self, skip_last=True):
         self._skip_last_iter = skip_last
