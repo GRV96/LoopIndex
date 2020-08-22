@@ -58,8 +58,8 @@ class LoopIndex:
     def set_limit(self, limit):
         if not self._limit_is_reachable(limit):
             raise ValueError("The limit will never be reached. limit = "
-                             + str(limit) + ", jump = " + str(jump)
-                             + ", start = " + str(start))
+                             + str(limit) + ", jump = " + str(self._jump)
+                             + ", start = " + str(self._start))
         self._limit = limit
 
     def skip_last_iter(self, skip_last=True):
