@@ -25,7 +25,7 @@ def backward_iter_console_test(num_list, jump, start=None, skip_last=False):
 
 
 def forward_iter_console_test(num_list, jump, start=0, skip_last=False):
-    test_announcement = "Forkward iteration by " + str(jump)
+    test_announcement = "Forward iteration by " + str(jump)
     if start != 0:
         test_announcement += " from " + str(start)
     print(test_announcement)
