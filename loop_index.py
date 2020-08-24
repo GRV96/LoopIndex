@@ -35,7 +35,7 @@ class LoopIndex:
         return self.check_bounds()
 
     def _limit_is_reachable(self, limit):
-        return (limit - self._start) * self._jump > 0
+        return (limit - self._start) * self._jump >= 0
 
     def reset(self):
         self._first_iteration = True
