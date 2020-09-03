@@ -2,11 +2,11 @@
 
 class LoopIndex:
 
-    def __init__(self, limit, jump=1, start=0):
-        if jump == 0:
+    def __init__(self, limit, step=1, start=0):
+        if step == 0:
             raise ValueError("Incrementing by 0 does not make sense.")
 
-        self._jump = jump
+        self._step = step
         self._start = start
         self.set_limit(limit)
 
@@ -15,7 +15,7 @@ class LoopIndex:
 
     def __repr__(self):
         return "LoopIndex(" + str(self._limit) + ", "\
-                + str(self._jump) + ", " + str(self._start) + ")"
+            + str(self._step) + ", " + str(self._start) + ")"
 
     def check_bounds(self):
         return self._lambda_check_bounds()
@@ -24,7 +24,7 @@ class LoopIndex:
         return self._index
 
     def increment(self):
-        self._index += self._jump
+        self._index += self._step
 
     def iterate(self):
         if self._first_iteration:
@@ -34,14 +34,14 @@ class LoopIndex:
         return self.check_bounds()
 
     def _limit_is_reachable(self, limit):
-        return (limit - self._start) * self._jump >= 0
+        return (limit - self._start) * self._step >= 0
 
     def reset(self):
         self._first_iteration = True
         self._index = self._start
 
     def _set_lambda_check_bounds(self):
-        if self._jump > 0:
+        if self._step > 0:
             self._lambda_check_bounds = lambda: self._index < self._limit
         else:
             self._lambda_check_bounds = lambda: self._index >= self._limit
@@ -49,6 +49,6 @@ class LoopIndex:
     def set_limit(self, limit):
         if not self._limit_is_reachable(limit):
             raise ValueError("The limit will never be reached: limit = "
-                             + str(limit) + ", jump = " + str(self._jump)
+                             + str(limit) + ", step = " + str(self._step)
                              + ", start = " + str(self._start) + ".")
         self._limit = limit
