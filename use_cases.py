@@ -279,46 +279,9 @@ print(list_copy)
 del index, i, list_copy, visited_indices
 
 
-# When performing a task on groups of consecutive elements,
-# it can be necessary to skip the last iteration.
-print("\nUse case 6.1.1: Make groups of three elements in ascending order")
-GROUP_SIZE = 3
-groups = list()
-visited_indices = list()
-
-if LIST_LENGTH % GROUP_SIZE: # Length is not a multiple of GROUP_SIZE.
-    skip_last_iter = True
-    print("The last iteration will be skipped.")
-else:
-    skip_last_iter = False
-
-index = LoopIndex(LIST_LENGTH, GROUP_SIZE, skip_last=skip_last_iter)
-print(repr(index))
-while index.iterate():
-    i = index.get_value()
-    visited_indices.append(i)
-    group = list()
-    jndex = LoopIndex(i+GROUP_SIZE, start=i)
-    print("\t" + repr(jndex))
-    while jndex.iterate():
-        j = jndex.get_value()
-        try:
-            group.append(NUM_LIST[j])
-        except IndexError:
-            print("INDEX ERROR! j = " + str(j), file=stderr)
-    groups.append(group)
-
-# Index 9 is not visited.
-print("Visited indices: " + str(visited_indices))
-
-for group in groups:
-    print(group)
-
-del GROUP_SIZE, groups, group, index, i,\
-    jndex, j, skip_last_iter, visited_indices
-
-
-print("\nUse case 6.1.2: use case 6.1.1 without skip_last")
+# When performing a task on groups of consecutive elements, it can be necessary
+# to set a limit lesser than the sequence's length or greater than 0.
+print("\nUse case 6.1: Make groups of three elements in ascending order")
 GROUP_SIZE = 3
 groups = list()
 visited_indices = list()
@@ -348,49 +311,12 @@ for group in groups:
 del GROUP_SIZE, groups, group, index, i, jndex, j, visited_indices
 
 
-print("\nUse case 6.2.1: Make groups of three elements in descending order")
+print("\nUse case 6.2: Make groups of three elements in descending order")
 GROUP_SIZE = 3
 groups = list()
 visited_indices = list()
 
-if LIST_LENGTH % GROUP_SIZE: # Length is not a multiple of GROUP_SIZE.
-    skip_last_iter = True
-    print("The last iteration will be skipped.")
-else:
-    skip_last_iter = False
-
-index = LoopIndex(0, -GROUP_SIZE, LIST_LENGTH-1, skip_last_iter)
-print(repr(index))
-while index.iterate():
-    i = index.get_value()
-    visited_indices.append(i)
-    group = list()
-    jndex = LoopIndex(i-(GROUP_SIZE-1), -1, i)
-    print("\t" + repr(jndex))
-    while jndex.iterate():
-        j = jndex.get_value()
-        try:
-            group.append(NUM_LIST[j])
-        except IndexError:
-            print("INDEX ERROR! j = " + str(j), file=stderr)
-    groups.append(group)
-
-# Index 1 is not visited.
-print("Visited indices: " + str(visited_indices))
-
-for group in groups:
-    print(group)
-
-del GROUP_SIZE, groups, group, index, i,\
-    jndex, j, skip_last_iter, visited_indices
-
-
-print("\nUse case 6.2.2: use case 6.2.1 without skip_last")
-GROUP_SIZE = 3
-groups = list()
-visited_indices = list()
-
-index = LoopIndex(0+(LIST_LENGTH%GROUP_SIZE), -GROUP_SIZE, LIST_LENGTH-1)
+index = LoopIndex(LIST_LENGTH%GROUP_SIZE, -GROUP_SIZE, LIST_LENGTH-1)
 print(repr(index))
 while index.iterate():
     i = index.get_value()
@@ -415,23 +341,17 @@ for group in groups:
 del GROUP_SIZE, groups, group, index, i, jndex, j, visited_indices
 
 
-print("\nUse case 7.1.1: Make groups of three elements from a list\n"
-      + "                of nine elements in ascending order")
-NUM_LIST_7_1_1 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-LIST_LENGTH_7_1_1 = len(NUM_LIST_7_1_1)
+print("\nUse case 7.1: Make groups of three elements from a list\n"
+      + "              of nine elements in ascending order")
+NUM_LIST_7_1 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+LIST_LENGTH_7_1 = len(NUM_LIST_7_1)
 GROUP_SIZE = 3
 groups = list()
 visited_indices = list()
 
-print("List for this use case: " + str(NUM_LIST_7_1_1))
+print("List for this use case: " + str(NUM_LIST_7_1))
 
-if LIST_LENGTH_7_1_1 % GROUP_SIZE: # Length is not a multiple of GROUP_SIZE.
-    skip_last_iter = True
-    print("The last iteration will be skipped.")
-else:
-    skip_last_iter = False
-
-index = LoopIndex(LIST_LENGTH_7_1_1, GROUP_SIZE, skip_last=skip_last_iter)
+index = LoopIndex(LIST_LENGTH_7_1-(LIST_LENGTH_7_1%GROUP_SIZE), GROUP_SIZE)
 print(repr(index))
 while index.iterate():
     i = index.get_value()
@@ -442,7 +362,7 @@ while index.iterate():
     while jndex.iterate():
         j = jndex.get_value()
         try:
-            group.append(NUM_LIST_7_1_1[j])
+            group.append(NUM_LIST_7_1[j])
         except IndexError:
             print("INDEX ERROR! j = " + str(j), file=stderr)
     groups.append(group)
@@ -452,61 +372,21 @@ print("Visited indices: " + str(visited_indices))
 for group in groups:
     print(group)
 
-del NUM_LIST_7_1_1, LIST_LENGTH_7_1_1, GROUP_SIZE, groups, group,\
-    index, i, jndex, j, skip_last_iter, visited_indices
-
-
-print("\nUse case 7.1.2: use case 7.1.1 without skip_last")
-NUM_LIST_7_1_2 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-LIST_LENGTH_7_1_2 = len(NUM_LIST_7_1_2)
-GROUP_SIZE = 3
-groups = list()
-visited_indices = list()
-
-print("List for this use case: " + str(NUM_LIST_7_1_2))
-
-index = LoopIndex(LIST_LENGTH_7_1_2-(LIST_LENGTH_7_1_2%GROUP_SIZE), GROUP_SIZE)
-print(repr(index))
-while index.iterate():
-    i = index.get_value()
-    visited_indices.append(i)
-    group = list()
-    jndex = LoopIndex(i+GROUP_SIZE, start=i)
-    print("\t" + repr(jndex))
-    while jndex.iterate():
-        j = jndex.get_value()
-        try:
-            group.append(NUM_LIST_7_1_2[j])
-        except IndexError:
-            print("INDEX ERROR! j = " + str(j), file=stderr)
-    groups.append(group)
-
-print("Visited indices: " + str(visited_indices))
-
-for group in groups:
-    print(group)
-
-del NUM_LIST_7_1_2, LIST_LENGTH_7_1_2, GROUP_SIZE,\
+del NUM_LIST_7_1, LIST_LENGTH_7_1, GROUP_SIZE,\
     groups, group, index, i, jndex, j, visited_indices
 
 
-print("\nUse case 7.2.1: Make groups of three elements from a list\n"
-      + "                of nine elements in descending order")
-NUM_LIST_7_2_1 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-LIST_LENGTH_7_2_1 = len(NUM_LIST_7_2_1)
+print("\nUse case 7.2: Make groups of three elements from a list\n"
+      + "              of nine elements in descending order")
+NUM_LIST_7_2 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+LIST_LENGTH_7_2 = len(NUM_LIST_7_2)
 GROUP_SIZE = 3
 groups = list()
 visited_indices = list()
 
-print("List for this use case: " + str(NUM_LIST_7_2_1))
+print("List for this use case: " + str(NUM_LIST_7_2))
 
-if LIST_LENGTH_7_2_1 % GROUP_SIZE: # Length is not a multiple of GROUP_SIZE.
-    skip_last_iter = True
-    print("The last iteration will be skipped.")
-else:
-    skip_last_iter = False
-
-index = LoopIndex(0, -GROUP_SIZE, LIST_LENGTH_7_2_1-1, skip_last_iter)
+index = LoopIndex(LIST_LENGTH_7_2%GROUP_SIZE, -GROUP_SIZE, LIST_LENGTH_7_2-1)
 print(repr(index))
 while index.iterate():
     i = index.get_value()
@@ -517,7 +397,7 @@ while index.iterate():
     while jndex.iterate():
         j = jndex.get_value()
         try:
-            group.append(NUM_LIST_7_2_1[j])
+            group.append(NUM_LIST_7_2[j])
         except IndexError:
             print("INDEX ERROR! j = " + str(j), file=stderr)
     groups.append(group)
@@ -527,45 +407,5 @@ print("Visited indices: " + str(visited_indices))
 for group in groups:
     print(group)
 
-del NUM_LIST_7_2_1, LIST_LENGTH_7_2_1, GROUP_SIZE, groups, group,\
-    index, i, jndex, j, skip_last_iter, visited_indices
-
-
-print("\nUse case 7.2.2: use case 7.2.1 without skip_last")
-NUM_LIST_7_2_2 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-LIST_LENGTH_7_2_2 = len(NUM_LIST_7_2_2)
-GROUP_SIZE = 3
-groups = list()
-visited_indices = list()
-
-print("List for this use case: " + str(NUM_LIST_7_2_2))
-
-if LIST_LENGTH_7_2_2 % GROUP_SIZE: # Length is not a multiple of GROUP_SIZE.
-    skip_last_iter = True
-    print("The last iteration will be skipped.")
-else:
-    skip_last_iter = False
-
-index = LoopIndex(0+(LIST_LENGTH_7_2_2%GROUP_SIZE), -GROUP_SIZE, LIST_LENGTH_7_2_2-1)
-print(repr(index))
-while index.iterate():
-    i = index.get_value()
-    visited_indices.append(i)
-    group = list()
-    jndex = LoopIndex(i-(GROUP_SIZE-1), -1, i)
-    print("\t" + repr(jndex))
-    while jndex.iterate():
-        j = jndex.get_value()
-        try:
-            group.append(NUM_LIST_7_2_2[j])
-        except IndexError:
-            print("INDEX ERROR! j = " + str(j), file=stderr)
-    groups.append(group)
-
-print("Visited indices: " + str(visited_indices))
-
-for group in groups:
-    print(group)
-
-del NUM_LIST_7_2_2, LIST_LENGTH_7_2_2, GROUP_SIZE,\
+del NUM_LIST_7_2, LIST_LENGTH_7_2, GROUP_SIZE,\
     groups, group, index, i, jndex, j, visited_indices
