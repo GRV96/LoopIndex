@@ -20,6 +20,12 @@ class LoopIndex:
     def check_bounds(self):
         return self._lambda_check_bounds()
 
+    def _check_unreachable_limit_error(self, limit):
+        if not self._limit_is_reachable(limit):
+            raise ValueError("The limit will never be reached: limit = "
+                             + str(limit) + ", step = " + str(self._step)
+                             + ", start = " + str(self._start) + ".")
+
     def get_value(self):
         return self._index
 
@@ -47,8 +53,5 @@ class LoopIndex:
             self._lambda_check_bounds = lambda: self._index >= self._limit
 
     def set_limit(self, limit):
-        if not self._limit_is_reachable(limit):
-            raise ValueError("The limit will never be reached: limit = "
-                             + str(limit) + ", step = " + str(self._step)
-                             + ", start = " + str(self._start) + ".")
+        self._check_unreachable_limit_error(limit)
         self._limit = limit
